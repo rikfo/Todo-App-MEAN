@@ -1,0 +1,57 @@
+<!-- <<ng-template *ngIf="error !== null" #alert></ng-template> -->
+<app-alert *ngIf="error" [message]="error" (destroy)="onClose()"></app-alert>
+<div class="loginContainer">
+  <form class="form" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <h1>{{ loginMod ? "Login" : "SignUp" }}</h1>
+    <div class="login-form">
+      <input
+        id="email"
+        class="emailBox"
+        placeholder="example@gmail.com"
+        type="email"
+        name="email"
+        ngModel
+        required
+      />
+      <br />
+      <input
+        id="password"
+        class="passwordBox"
+        placeholder="password"
+        type="password"
+        name="password"
+        ngModel
+        required
+        minlength="5"
+      />
+      <br />
+      <input
+        id="passwordConf"
+        class="passwordConfBox"
+        placeholder="Confirm Password"
+        type="password"
+        name="passwordConf"
+        ngModel
+        required
+        minlength="5"
+        *ngIf="!loginMod"
+      />
+      <div class="submitBtns">
+        <button
+          class="btn btnCreate"
+          type="submit"
+          [disabled]="!loginForm.valid"
+        >
+          {{ loginMod ? "Login" : "Sign Up" }}
+        </button>
+        <button
+          class="btn btnSign"
+          type="button"
+          (click)="loginMod = !loginMod"
+        >
+          Switch To {{ !loginMod ? "Login" : "Sign Up" }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

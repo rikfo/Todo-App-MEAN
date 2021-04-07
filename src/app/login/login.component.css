@@ -1,0 +1,50 @@
+.loginContainer {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+.form {
+  margin: 10px 0;
+  padding: 0 20px;
+  border-radius: 10px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+h1 {
+  color: rgb(100, 148, 237);
+}
+.emailBox,
+.passwordBox,
+.passwordConfBox {
+  margin: 15px;
+  padding: 5px;
+  outline: none;
+  border-radius: 10px;
+  border: none;
+  border: solid 1px rgba(100, 148, 237, 0.5);
+  color: cornflowerblue;
+}
+.btn {
+  transition: transform 0.3s ease-in-out;
+  margin: 0 5px;
+}
+.btn:hover {
+  transform: scale(1.1);
+}
+.btnCreate {
+  border: 1px solid cornflowerblue;
+  color: cornflowerblue;
+}
+.btnSign {
+  background-color: cornflowerblue;
+  color: white;
+}
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgba(100, 148, 237, 0.5);
+  opacity: 1; /* Firefox */
+}

@@ -1,0 +1,36 @@
+h1 {
+  font-size: small;
+  background-color: white;
+  padding: 5px;
+  margin: 3px;
+  width: 60vw;
+  height: auto;
+  text-align: center;
+  min-width: 200px;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-family: "Megrim", sans-serif;
+  font-weight: bolder;
+  color: cornflowerblue;
+  border-radius: 5px;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  background-color: cornflowerblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.placeholder {
+  height: 90vh;
+  width: 60vw;
+  border-radius: 10px;
+  min-width: 200px;
+  background-color: white;
+  overflow: scroll;
+  overflow-x: hidden;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}

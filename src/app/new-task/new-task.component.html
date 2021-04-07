@@ -1,0 +1,29 @@
+<div class="bg"></div>
+<div class="row container">
+  <form (ngSubmit)="onSubmit()" #f="ngForm">
+    <div class="col-xs-12 form-group">
+      <label for="name">List name (description):</label>
+      <input
+        id="name"
+        class="form-control"
+        type="text"
+        name="desc"
+        ngModel
+        required
+        minlength="5"
+      />
+    </div>
+    <div class="btns">
+      <button
+        class="btn btn-success btnCreate"
+        type="submit"
+        [disabled]="!creationForm.valid"
+      >
+        {{ editMode ? "Edit" : "Create" }}
+      </button>
+      <button class="btn btn-danger" type="button" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
