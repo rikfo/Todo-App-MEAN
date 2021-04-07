@@ -5,6 +5,7 @@ import { catchError, tap } from "rxjs/operators";
 import { BehaviorSubject, throwError } from "rxjs";
 
 import { User } from "../models/user.model";
+import { environment } from "src/environments/environment";
 
 export interface AuthResponse {
   token: string;
@@ -23,7 +24,7 @@ export class AuthService {
 
   signUp(email: string, password: string, passwordConfirm: string) {
     return this.httpCl
-      .post<AuthResponse>(`/signUp`, {
+      .post<AuthResponse>(`${environment.API}/signUp`, {
         email,
         password,
         passwordConfirm,
@@ -43,7 +44,7 @@ export class AuthService {
 
   logIn(email: string, password: string) {
     return this.httpCl
-      .post<AuthResponse>(`/login`, {
+      .post<AuthResponse>(`${environment.API}/login`, {
         email: email,
         password: password,
         returnSecureToken: true,
@@ -79,8 +80,6 @@ export class AuthService {
       new Date(new Date().getTime() + userData._tokenExperationDate)
     );
 
-    console.log(userData._tokenExperationDate);
-
     if (currentUser.tokenExp) {
       this.tokenExperation =
         new Date(
@@ -91,7 +90,6 @@ export class AuthService {
     }
   }
   autoLogOut(experationDur) {
-    console.log(experationDur);
     this.experationTimer = setTimeout(() => {
       this.logOut();
     }, experationDur);

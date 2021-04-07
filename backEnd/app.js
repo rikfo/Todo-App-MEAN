@@ -37,11 +37,11 @@ if (process.env.NODE_ENV === "production") {
       path.resolve(path.resolve(), "dist", "front-end", "index.html")
     );
   });
-} else {
-  app.all("*", (req, res, next) => {
-    next(new ErrorHandler("cannot find this route on this server!", 404));
-  });
 }
+
+app.all("*", (req, res, next) => {
+  next(new ErrorHandler("cannot find this route on this server!", 404));
+});
 
 app.use(errorController);
 

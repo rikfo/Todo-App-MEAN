@@ -4,19 +4,22 @@ import { HttpClient } from "@angular/common/http";
 import { Task } from "../models/task.model";
 import { CreateService } from "./create-serv.service";
 import { tap } from "rxjs/operators";
+import { environment } from "src/environments/environment";
 
 @Injectable({ providedIn: "root" })
 export class HttpService {
   constructor(private httpCl: HttpClient, private crtServ: CreateService) {}
 
   createTask(task: Task) {
-    this.httpCl.post(`/tasks/add-task`, task).subscribe((data) => {
-      this.crtServ.addTask(data["task"]);
-    });
+    this.httpCl
+      .post(`${environment.API}/tasks/add-task`, task)
+      .subscribe((data) => {
+        this.crtServ.addTask(data["task"]);
+      });
   }
 
   fetshTasks() {
-    return this.httpCl.get<Task[]>(`/tasks`).pipe(
+    return this.httpCl.get<Task[]>(`${environment.API}/tasks`).pipe(
       tap((tasks) => {
         this.crtServ.setTasks(tasks["data"].tasks);
       })
@@ -24,16 +27,16 @@ export class HttpService {
   }
 
   deleteTask(taskId: string) {
-    return this.httpCl.delete(`/tasks/task/` + taskId);
+    return this.httpCl.delete(`${environment.API}/tasks/task/` + taskId);
   }
 
   updateTask(taskId: string, isFinished?: boolean, name?: string) {
     this.httpCl
-      .patch(`/tasks/task/` + taskId, {
+      .patch(`${environment.API}/tasks/task/` + taskId, {
         name,
         isFinished,
       })
-      .subscribe((resData) => {
+      .subscribe(() => {
         if (name !== undefined) this.crtServ.editTask(taskId, name);
       });
   }
