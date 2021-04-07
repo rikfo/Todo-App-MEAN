@@ -8,7 +8,6 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 export class AlertComponent {
   @Input() message: string;
   @Output() destroy = new EventEmitter<void>();
-  // message: string;
 
   onDestroy() {
     this.destroy.emit();

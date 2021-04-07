@@ -1,11 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Task } from '../models/task.model';
-import { BehaviorSubject } from 'rxjs';
-
-// import { HttpService } from './httpReq.service';
+import { Injectable } from "@angular/core";
+import { Task } from "../models/task.model";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CreateService {
   selectedTask: Task;
@@ -22,11 +20,8 @@ export class CreateService {
     }
     return this.selectedTask;
   }
-  // importTasks(tasks: Task[]) {
-  //   this.tasksArr = tasks;
-  // }
+
   addTask(task: Task) {
-    // this.httpServ.createTask(task);
     this.tasksArr.push(task);
     this.taskAdded.next(this.tasksArr.slice());
   }

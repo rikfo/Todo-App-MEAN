@@ -1,15 +1,27 @@
+import path from "path";
+
 import express from "express";
-// import Task from "./models/taskModel.js";
-import usersRouter from "./routes/usersRouter.js";
-import tasksRouter from "./routes/tasksRouter.js";
-// import { catchAsync } from "./utils/catchAsync.js";
-import ErrorHandler from "./utils/errorHandler.js";
-import errorController from "./controllers/errorController.js";
-import authController from "./controllers/authController.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
+import usersRouter from "./routes/usersRouter.js";
+import tasksRouter from "./routes/tasksRouter.js";
+import ErrorHandler from "./utils/errorHandler.js";
+import errorController from "./controllers/errorController.js";
+import authController from "./controllers/authController.js";
+
 const app = express();
+
+const forceSSL = function () {
+  return function (req, res, next) {
+    if (req.headers["x-forwarded-proto"] !== "https") {
+      return res.redirect(["https://", req.get("Host"), req.url].join(""));
+    }
+    next();
+  };
+};
+
+// app.use(forceSSL());
 
 app.use(express.json());
 app.use(cookieParser());
@@ -22,13 +34,25 @@ app.use((req, res, next) => {
   );
   next();
 });
+
 app.use("/", usersRouter);
 
 app.use("/tasks", cors({ origin: "*" }), authController.protect, tasksRouter);
 
-app.all("*", (req, res, next) => {
-  next(new ErrorHandler("cannot find this route on this server!", 404));
-});
+if (process.env.NODE_ENV === "production") {
+  console.log(path.join(path.resolve(), "/dist/front-end"));
+  console.log(path.resolve(path.resolve(), "dist", "front-end", "index.html"));
+  app.use(express.static(path.join(path.resolve(), "/dist/front-end")));
+  app.get("*", (req, res) => {
+    res.sendFile(
+      path.resolve(path.resolve(), "dist", "front-end", "index.html")
+    );
+  });
+} else {
+  app.all("*", (req, res, next) => {
+    next(new ErrorHandler("cannot find this route on this server!", 404));
+  });
+}
 
 app.use(errorController);
 

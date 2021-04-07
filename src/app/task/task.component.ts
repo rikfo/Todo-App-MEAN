@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
-import { CreateService } from '../services/create-serv.service';
-import { Task } from '../models/task.model';
-import { AuthService } from '../login/auth.service';
-import { HttpService } from '../services/httpReq.service';
-import { User } from '../models/user.model';
-import { Subject } from 'rxjs';
+import { CreateService } from "../services/create-serv.service";
+import { Task } from "../models/task.model";
+import { AuthService } from "../login/auth.service";
+import { HttpService } from "../services/httpReq.service";
 
 @Component({
-  selector: 'app-task',
-  templateUrl: './task.component.html',
-  styleUrls: ['./task.component.css'],
+  selector: "app-task",
+  templateUrl: "./task.component.html",
+  styleUrls: ["./task.component.css"],
 })
 export class TaskComponent implements OnInit {
   tasks: Task[] = [];
@@ -25,15 +23,15 @@ export class TaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.httpSrv.fetshTasks().subscribe((resData) => {
-      this.tasks = resData['data'].tasks;
+      this.tasks = resData["data"].tasks;
     });
   }
 
   onAddTask() {
-    this.router.navigate(['/addtask']);
+    this.router.navigate(["/addtask"]);
   }
-  onEditTask(index, task: Task) {
-    this.router.navigate(['/edit-task', `${task._id}`]);
+  onEditTask(task: Task) {
+    this.router.navigate(["/edit-task", `${task._id}`]);
   }
   finishTask(task: Task) {
     task.isFinished = !task.isFinished;

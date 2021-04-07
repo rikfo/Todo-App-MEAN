@@ -1,16 +1,9 @@
-import {
-  Component,
-  ComponentFactoryResolver,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Observable, Subscription } from "rxjs";
 
 import { AuthResponse, AuthService } from "./auth.service";
-import { AlertComponent } from "../alert/alert.component";
 
 @Component({
   selector: "app-login",
@@ -24,11 +17,7 @@ export class LoginComponent implements OnInit {
   @ViewChild("alert", { static: false }) alerHost: ElementRef;
   closeSub: Subscription;
 
-  constructor(
-    private authServ: AuthService,
-    private router: Router,
-    private compFacResolver: ComponentFactoryResolver
-  ) {}
+  constructor(private authServ: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -49,32 +38,14 @@ export class LoginComponent implements OnInit {
     }
     this.loginForm.reset();
     authObs.subscribe(
-      (userData) => {
+      () => {
         this.router.navigate(["../"]);
       },
       (err) => {
         this.error = err;
-        // console.log(this.error);
-        // this.showAlert(err);
       }
     );
   }
-
-  // private showAlert(message: string) {
-  //   const alertComp = this.compFacResolver.resolveComponentFactory(
-  //     AlertComponent
-  //   );
-  //   this.alerHost.nativeElement.viewContRef.clear();
-  //   const alertComponent = this.alerHost.nativeElement.viewContRef.createComponent(
-  //     alertComp
-  //   );
-  //   alertComponent.instance.message = message;
-  //   this.closeSub = alertComponent.instance.destroy.subscribe(() => {
-  //     //Maximillian approach : this.alerHost.clear
-  //     alertComponent.destroy();
-  //     this.closeSub.unsubscribe();
-  //   });
-  // }
 
   onClose() {
     this.error = null;

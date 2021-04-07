@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   HttpInterceptor,
   HttpEvent,
   HttpHandler,
   HttpRequest,
-  HttpParams,
   HttpHeaders,
-} from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { take, exhaustMap } from 'rxjs/operators';
+} from "@angular/common/http";
+import { Observable } from "rxjs";
+import { take, exhaustMap } from "rxjs/operators";
 
-import { AuthService } from './auth.service';
+import { AuthService } from "./auth.service";
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
@@ -27,14 +26,10 @@ export class AuthInterceptorService implements HttpInterceptor {
           return next.handle(req);
         }
         const modReq = req.clone({
-          // params: new HttpParams().set('user', user._id),
           headers: new HttpHeaders().set(
-            'Authorization',
-            'Bearer ' + user.tokenExp
+            "Authorization",
+            "Bearer " + user.tokenExp
           ),
-          // setHeaders: {
-          //   Authorization: 'Bearer ' + user.tokenExp,
-          // },
         });
         return next.handle(modReq);
       })

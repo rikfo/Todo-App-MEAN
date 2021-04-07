@@ -4,8 +4,6 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { catchError, tap } from "rxjs/operators";
 import { BehaviorSubject, throwError } from "rxjs";
 
-import { environment } from "../../environments/environment";
-
 import { User } from "../models/user.model";
 
 export interface AuthResponse {
@@ -25,7 +23,7 @@ export class AuthService {
 
   signUp(email: string, password: string, passwordConfirm: string) {
     return this.httpCl
-      .post<AuthResponse>(`${environment.API}/signUp`, {
+      .post<AuthResponse>(`/signUp`, {
         email,
         password,
         passwordConfirm,
@@ -45,7 +43,7 @@ export class AuthService {
 
   logIn(email: string, password: string) {
     return this.httpCl
-      .post<AuthResponse>(`${environment.API}/login`, {
+      .post<AuthResponse>(`/login`, {
         email: email,
         password: password,
         returnSecureToken: true,
@@ -53,7 +51,6 @@ export class AuthService {
       .pipe(
         catchError(this.errHandling),
         tap((resData) => {
-          // the bug is here v
           this.tokenExperation = parseInt(resData.experationDate.toString());
           this.usersHandling(resData.token, this.tokenExperation, resData.data);
         })
@@ -73,7 +70,6 @@ export class AuthService {
       _token: string;
       _tokenExperationDate: number;
     } = JSON.parse(localStorage.getItem("userInfo"));
-    // console.log(JSON.parse(localStorage.getItem('userInfo')));
     if (!userData) return;
 
     const currentUser = new User(
@@ -91,10 +87,7 @@ export class AuthService {
           new Date().getTime() + userData._tokenExperationDate
         ).getTime() - new Date().getTime();
       this.user.next(currentUser);
-      // new Date(this.tokenExperation).getTime() - new Date().getTime();
-      // new Date(userData._tokenExperationDate).getTime() -
-      // new Date().getTime();
-      this.autoLogOut(this.tokenExperation); //this.tokenExperation);
+      this.autoLogOut(this.tokenExperation);
     }
   }
   autoLogOut(experationDur) {
