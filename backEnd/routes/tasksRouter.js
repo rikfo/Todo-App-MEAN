@@ -5,14 +5,13 @@ import express from "express";
 
 const router = express.Router();
 
-// router.route("/").get();
 router.post(
   "/add-task",
   catchAsync(async (req, res) => {
     const task = await Task.create({
       name: req.body.name,
       isFinished: req.body.isFinished,
-      user: req.user._id, //user._id,
+      user: req.user._id,
     });
 
     res.status(200).json({

@@ -34,7 +34,6 @@ const userSchema = new mongoose.Schema({
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
 
-  //encrypting the password the higher the salt value is, the higher cpu work
   this.password = await bcrypt.hash(this.password, 12);
 
   this.passwordConfirm = undefined;
@@ -44,7 +43,6 @@ userSchema.pre("save", async function (next) {
 userSchema.pre(/^find/, async function (next) {});
 
 userSchema.methods.checkPassword = async function (candPW, usrPW) {
-  // this.password is not available because it's not selected
   return await bcrypt.compare(candPW, usrPW);
 };
 
