@@ -24,7 +24,7 @@ export class AuthService {
 
   signUp(email: string, password: string, passwordConfirm: string) {
     return this.httpCl
-      .post<AuthResponse>(`${environment.API}/signUp`, {
+      .post<AuthResponse>(`/signUp`, {
         email,
         password,
         passwordConfirm,
@@ -44,7 +44,7 @@ export class AuthService {
 
   logIn(email: string, password: string) {
     return this.httpCl
-      .post<AuthResponse>(`${environment.API}/login`, {
+      .post<AuthResponse>(`/login`, {
         email: email,
         password: password,
         returnSecureToken: true,

@@ -29,8 +29,6 @@ app.use("/", usersRouter);
 app.use("/tasks", cors({ origin: "*" }), authController.protect, tasksRouter);
 
 if (process.env.NODE_ENV === "production") {
-  console.log(path.join(path.resolve(), "/dist/front-end"));
-  console.log(path.resolve(path.resolve(), "dist", "front-end", "index.html"));
   app.use(express.static(path.join(path.resolve(), "/dist/front-end")));
   app.get("*", (req, res) => {
     res.sendFile(
